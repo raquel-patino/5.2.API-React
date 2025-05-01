@@ -25,12 +25,17 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('access_token', data.access_token);
     fetchUser();
   };
-
+  
   const logout = async () => {
-    await api.post('/logout');
+    try {
+      await api.post('/logout');
+    } catch (err) {
+      console.warn('Logout falló (esperado si ya no hay token):', err.message);
+      // no hacemos nada si falla, igual cerramos sesión localmente
+    }
+  
     localStorage.removeItem('access_token');
     setUser(null);
-    navigate('/login');
   };
 
   const fetchUser = async () => {
@@ -45,6 +50,9 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('access_token');
     if (token) fetchUser();
+    if (token) {
+      fetchUser().catch(() => setUser(null));
+    }
   }, []);
 
   return (

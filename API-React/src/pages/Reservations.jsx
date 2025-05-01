@@ -43,6 +43,29 @@ const Reservations = () => {
     }
   };
   
+  const downloadInvoice = async (reservationId) => {
+    try {
+      const response = await api.get(`/reservations/${reservationId}/invoices`, {
+        responseType: 'blob', // 👈 necesario para descargar PDF
+      });
+  
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+  
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `factura_reserva_${reservationId}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+  
+      window.URL.revokeObjectURL(url); // buena práctica: liberar la URL
+    } catch (error) {
+      console.error('Error al descargar la factura:', error);
+      alert('No se pudo generar la factura.');
+    }
+  };
+  
 
   return (
     <div style={{ padding: '2rem' }}>
@@ -69,6 +92,9 @@ const Reservations = () => {
         </button>
         <button onClick={() => handleDelete(reserva.id)}>
         Cancelar
+            </button>
+            <button onClick={() => downloadInvoice(reserva.id)}>
+                 Crear factura
             </button>
           </li>
         ))}
