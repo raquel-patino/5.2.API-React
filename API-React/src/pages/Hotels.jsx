@@ -52,17 +52,28 @@ const Hotels = () => {
 
       {submitted && !hotels.length && !error && <p>No se encontraron hoteles disponibles</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
-
       <ul>
-      {hotels.map((hotel) => (
-        <li key={hotel.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/hotels/${hotel.id}/rooms`, { state: dates })}>
-        <h3>{hotel.name}</h3>
-        <p>Descripción: {hotel.description}</p>
-        <p>País: {hotel.country}</p>
-        <p>Contacto: {hotel.telephone_number}</p>
-        </li>
-    ))}
-      </ul>
+  {hotels.map((hotel) => (
+    <li
+      key={hotel.id}
+      style={{ cursor: 'pointer' }}
+      onClick={() =>
+        navigate(`/hotels/${hotel.id}/rooms`, {
+          state: {
+            ...dates, // check_in, check_out
+            hotel_name: hotel.name,
+          },
+        })
+      }
+    >
+      <h3>{hotel.name}</h3>
+      <p>Descripción: {hotel.description}</p>
+      <p>País: {hotel.country}</p>
+      <p>Contacto: {hotel.telephone_number}</p>
+    </li>
+  ))}
+</ul>
+
     </div>
   );
 };
