@@ -5,12 +5,6 @@ import '../styles/Home.css';
 const Home = () => {
   const { user, logout } = useAuth();
 
-  const handleLogout = async () => {
-    await logout();
-    navigate('/Home'); // o '/' si tu ruta es la raíz
-  };
-  
-
 
   return (
     <div className="home-container">
@@ -30,10 +24,6 @@ const Home = () => {
               <button style={{ margin: '0.5rem' }}>Ver mis reservas</button>
             </Link>
 
-            <Link to="/profile">
-              <button style={{ margin: '0.5rem' }}>Mi perfil</button>
-            </Link>
-
             {user.user_type === 'admin' && (
               <Link to="/admin/users">
                 <button
@@ -51,21 +41,6 @@ const Home = () => {
                 </button>
               </Link>
             )}
-
-            <button
-              onClick={handleLogout}
-              style={{
-                marginTop: '1rem',
-                backgroundColor: '#e74c3c',
-                color: 'white',
-                padding: '0.5rem 1rem',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer'
-              }}
-            >
-              Cerrar sesión
-            </button>
           </div>
         ) : (
           <div>

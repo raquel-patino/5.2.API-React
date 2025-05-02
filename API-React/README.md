@@ -1,3 +1,18 @@
+# README FRONTEND-BACKEND
+
+## Índice
+
+- [Presentación del modelo IA](#presentación-del-uso-de-ChatGPT-como-modelo-de-IA-en-el-desarrollo-del-Frontend)
+- [Configuración de la aplicación](#proyecto-central-de-reservas-de-hoteles)
+
+
+</br>
+</br>
+</br>
+
+
+---
+
 # Presentación del uso de ChatGPT como modelo de IA en el desarrollo del Frontend
 
 ## 1. Descripción del modelo IA seleccionado y el motivo de su elección
@@ -233,5 +248,152 @@ Este proyecto ha supuesto una experiencia de aprendizaje profunda en varios nive
 
 Lo más desafiante fue lidiar con errores en tiempo real cuando el frontend no se comportaba como esperaba. Lo más enriquecedor fue entender *por qué* React redibuja componentes al cambiar el estado, o cómo se comportan los hooks como `useEffect`.
 
-Gracias a esta experiencia, ahora tengo una base sólida tanto en React como en la interacción con APIs Laravel, y me siento con la confianza de iniciar nuevos proyectos por mi cuenta.
+</br>
+</br>
+</br>
 
+---
+---
+# Proyecto: Central de Reservas de Hoteles
+
+Este proyecto consiste en una aplicación de reservas de hoteles con un frontend en **React + Vite** y un backend desarrollado en **Laravel 12 + Passport**.
+
+---
+
+## 📁 Estructura del Proyecto
+
+/backend → API Laravel 12
+
+/frontend → Cliente React + Vite
+
+
+
+---
+
+## 🚀 Requisitos
+
+### Backend (Laravel 12)
+
+- PHP ^8.1
+- Composer
+- MySQL o MariaDB
+- Laravel Passport instalado
+
+### Frontend (React)
+
+- Node.js ^18
+- npm
+
+---
+
+## 🛠 Instalación del Backend
+
+```bash
+cd backend
+
+# Instalar dependencias
+composer install
+
+# Copiar el archivo de entorno
+cp .env.example .env
+
+# Configurar tus credenciales de base de datos en .env
+
+# Generar clave de aplicación
+php artisan key:generate
+
+# Migrar y poblar la base de datos
+php artisan migrate --seed
+
+# Instalar Passport
+php artisan passport:install
+
+# Correr servidor
+php artisan serve
+📌 La API estará disponible por defecto en: http://localhost:8000
+````
+
+⚙️ **Configuración de CORS**
+
+Asegúrate de tener configurado correctamente el middleware CORS en Laravel.
+Si usas Laravel 12, puedes publicar el archivo así:
+
+```bash
+php artisan config:publish cors
+````
+Y luego, edita config/cors.php para incluir la URL del frontend:
+```bash
+'allowed_origins' => ['http://localhost:5173']
+````
+
+
+
+🔐 **Autenticación**
+
+Laravel utiliza Passport con tokens Bearer.
+
+El frontend almacena el token en localStorage después de registrarse o iniciar sesión.
+
+Se incluye automáticamente en todas las solicitudes protegidas.
+
+🧪 Funcionalidades implementadas
+
+✅ Registro e inicio de sesión
+
+✅ Buscar hoteles disponibles por fechas
+
+✅ Ver habitaciones por hotel
+
+✅ Crear, ver, editar y eliminar reservas
+
+✅ Descargar factura de reserva (PDF)
+
+✅ Panel de administración (ver y cambiar rol de usuarios)
+
+✅ Modificar perfil y eliminar cuenta
+
+
+
+## Instalación del Frontend
+```
+cd frontend
+```
+
+# Crear el proyecto (si aún no existe)
+````
+npm create vite@latest hotel-booking-client -- --template react
+````
+
+# Instalar dependencias
+````
+npm install
+````
+
+# Instalar librerías necesarias
+````
+npm install axios react-router-dom
+````
+
+# Correr el servidor
+````
+npm run dev
+````
+📌 El frontend estará disponible en: http://localhost:5173
+
+
+## 🔗 Conexión Frontend - Backend
+
+El archivo src/api/axios.js contiene la base URL apuntando al backend:
+````
+import axios from 'axios';
+````
+````bash
+const api = axios.create({
+  baseURL: 'http://localhost:8000/api',
+  headers: {
+    'Accept': 'application/json',
+  },
+});
+
+export default api;
+````

@@ -3,28 +3,23 @@ import { useAuth } from '../context/AuthContext';
 import api from '../api/axios';
 
 const Navbar = () => {
-  const { user, logout: clearAuth } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    try {
-      await logout(); // ✅ ya hace la lógica de borrar token y usuario
-      navigate('/temp'); // redirige a ruta temporal
-      setTimeout(() => navigate('/Home', { replace: true }), 0); // vuelve al Home y fuerza re-render
-    } catch (err) {
-      console.error('Error al cerrar sesión:', err);
-      alert('No se pudo cerrar sesión.');
-    }
+    await logout();
+    navigate('/'); // o '/' si tu ruta es la raíz
   };
 
-  const handleDelete = async () => {
-    if (!window.confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción es irreversible.')) return;
-
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');
+  
+    if (!confirmed) return;
+  
     try {
       await api.delete('/users');
-      clearAuth();
-      localStorage.removeItem('token');
-      navigate('/Home');
+      await logout(); // revoca token y limpia sesión
+      navigate('/', { replace: true });
     } catch (err) {
       console.error('Error al eliminar cuenta:', err);
       alert('No se pudo eliminar la cuenta.');
@@ -36,8 +31,8 @@ const Navbar = () => {
   return (
     <nav style={{ backgroundColor: '#f4f4f4', padding: '1rem', display: 'flex', justifyContent: 'space-between' }}>
       <div>
-        <Link to="/Home" style={{ marginRight: '1rem' }}>🏠 Inicio</Link>
-        {user.user_type === 'admin' && (
+        <Link to="/" style={{ marginRight: '1rem' }}>🏠 Inicio</Link>
+        {user?.user_type === 'admin' && (
           <Link to="/admin/users" style={{ marginRight: '1rem' }}>👑 Admin</Link>
         )}
       </div>
@@ -45,7 +40,7 @@ const Navbar = () => {
         <Link to="/profile">
           <button style={{ marginRight: '1rem' }}>Modificar perfil</button>
         </Link>
-        <button onClick={handleDelete} style={{ marginRight: '1rem', backgroundColor: '#e74c3c', color: 'white' }}>
+        <button onClick={handleDeleteAccount} style={{ marginRight: '1rem', backgroundColor: '#e74c3c', color: 'white' }}>
           Eliminar cuenta
         </button>
         <button onClick={handleLogout}>Cerrar sesión</button>
