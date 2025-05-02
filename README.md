@@ -2,13 +2,8 @@
 
 ## Índice
 
-- [Presentación del modelo IA](#presentación-del-uso-de-ChatGPT-como-modelo-de-IA-en-el-desarrollo-del-Frontend)
-- [Configuración de la aplicación](#proyecto-central-de-reservas-de-hoteles)
-
-
-</br>
-</br>
-</br>
+- [Presentación del modelo IA](#presentación-del-uso-de-chatgpt-como-modelo-de-ia-en-el-desarrollo-del-frontend)
+- [Configuración de la aplicación](#central-de-reservas-de-hoteles)
 
 
 ---
@@ -254,7 +249,7 @@ Lo más desafiante fue lidiar con errores en tiempo real cuando el frontend no s
 
 ---
 ---
-# Proyecto: Central de Reservas de Hoteles
+# Central de Reservas de Hoteles
 
 Este proyecto consiste en una aplicación de reservas de hoteles con un frontend en **React + Vite** y un backend desarrollado en **Laravel 12 + Passport**.
 
@@ -294,10 +289,18 @@ cd backend
 # Instalar dependencias
 composer install
 
-# Copiar el archivo de entorno
+# Copia el archivo de ejemplo .env.example y renómbralo como .env.
+Esto se puede hacer con el siguiente comando:
+
 cp .env.example .env
 
-# Configurar tus credenciales de base de datos en .env
+# Configurar tus credenciales de base de datos en .env. Ejemplo:
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=mi_contraseña_segura
+DB_NAME=mi_base_de_datos
 
 # Generar clave de aplicación
 php artisan key:generate
@@ -363,6 +366,7 @@ cd frontend
 ````
 npm create vite@latest hotel-booking-client -- --template react
 ````
+** Si aqui nos da varias opciones, elegir Javascript y React**
 
 # Instalar dependencias
 ````
