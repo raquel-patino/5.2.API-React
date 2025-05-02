@@ -366,7 +366,7 @@ cd frontend
 ````
 npm create vite@latest hotel-booking-client -- --template react
 ````
-** Si aqui nos da varias opciones, elegir Javascript y React**
+***Si aqui nos da varias opciones, elegir Javascript y React***
 
 # Instalar dependencias
 ````
