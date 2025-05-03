@@ -361,12 +361,12 @@ Se incluye automáticamente en todas las solicitudes protegidas.
 ```
 cd frontend
 ```
+````
+git clone https://github.com/raquel-patino/5.2.API-React
 
-# Crear el proyecto (si aún no existe)
+cd 5.2.API-React
 ````
-npm create vite@latest hotel-booking-client -- --template react
-````
-***Si aqui nos da varias opciones, elegir Javascript y React***
+
 
 # Instalar dependencias
 ````
